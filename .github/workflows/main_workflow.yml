@@ -5,9 +5,17 @@ on:
       - nodejs_jest_job
 jobs:
   linter-execution:
+    strategy:
+      matrix:
+        include:
+          - node: 10
+          - node: 12
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+       with:
+        node-version: ${{ matrix.node }}
       - name: Lint Code Base
         uses: github/super-linter@v4
         env:
